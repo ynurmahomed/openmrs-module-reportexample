@@ -13,7 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
-import org.openmrs.module.reportexample.reporting.definitions.ExampleReportDefinition;
+import org.openmrs.module.reportexample.reporting.reports.MaleFarmersInHivProgramReport;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.definition.service.ReportDefinitionService;
 import org.openmrs.module.reporting.report.manager.ReportManagerUtil;
@@ -25,21 +25,21 @@ public class ReportExampleActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	private ExampleReportDefinition exampleReportDefinition = new ExampleReportDefinition();
+	private MaleFarmersInHivProgramReport maleFarmersInHivProgramReport = new MaleFarmersInHivProgramReport();
 	
 	/**
 	 * @see #started()
 	 */
 	public void started() {
 		log.info("Started Report Example updated");
-		ReportManagerUtil.setupReport(exampleReportDefinition);
+		ReportManagerUtil.setupReport(maleFarmersInHivProgramReport);
 	}
 	
 	/**
 	 * @see #stopped()
 	 */
 	public void stopped() {
-		ReportDefinition rd = exampleReportDefinition.constructReportDefinition();
+		ReportDefinition rd = maleFarmersInHivProgramReport.constructReportDefinition();
 		ReportDefinitionService rds = Context.getService(ReportDefinitionService.class);
 		if (rd != null) {
 			rds.purgeDefinition(rd);
