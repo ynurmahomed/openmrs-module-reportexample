@@ -1,13 +1,13 @@
 package org.openmrs.module.reportexample.reporting.library.indicators;
 
 import org.openmrs.Location;
-import org.openmrs.module.reportexample.reporting.library.cohorts.InProgramCohorts;
-import org.openmrs.module.reportexample.reporting.library.cohorts.ObsCohorts;
-import org.openmrs.module.reporting.cohort.definition.CodedObsCohortDefinition;
-import org.openmrs.module.reporting.cohort.definition.InProgramCohortDefinition;
+import org.openmrs.module.reportexample.reporting.library.cohorts.FarmersCohort;
+import org.openmrs.module.reportexample.reporting.library.cohorts.InHivProgramCohort;
+import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Mapped;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.indicator.CohortIndicator;
+import org.openmrs.module.reporting.indicator.Indicator;
 
 import java.util.Date;
 
@@ -15,15 +15,14 @@ import static org.openmrs.module.reporting.evaluation.parameter.Mapped.map;
 import static org.openmrs.module.reporting.evaluation.parameter.Mapped.noMappings;
 import static org.openmrs.module.reporting.indicator.CohortIndicator.newFractionIndicator;
 
-public class Indicators {
+public class FarmersInHivProgramIndicator {
 	
-	public static CohortIndicator farmersInHivProgramIndicator() {
+	public static Indicator getIndicator() {
+		CohortDefinition farmersCohort = FarmersCohort.getCohortDefinition();
+		CohortDefinition inHivProgramCohort = InHivProgramCohort.getCohortDefinition();
 		
-		CodedObsCohortDefinition farmersCohort = ObsCohorts.farmersCohortDefinition();
-		InProgramCohortDefinition inHivProgramCohort = InProgramCohorts.inHivProgramCohortDefinition();
-		
-		Mapped<CodedObsCohortDefinition> numerator = noMappings(farmersCohort);
-		Mapped<InProgramCohortDefinition> denominator = map(inHivProgramCohort, "onDate --> ${endDate}");
+		Mapped<CohortDefinition> numerator = noMappings(farmersCohort);
+		Mapped<CohortDefinition> denominator = map(inHivProgramCohort, "onDate --> ${endDate}");
 		
 		CohortIndicator farmersInHivProgramIndicator = newFractionIndicator("Farmers in HIV Program Indicator 2", numerator,
 		    denominator, null);
@@ -33,6 +32,5 @@ public class Indicators {
 		farmersInHivProgramIndicator.addParameter(new Parameter("location", "location", Location.class));
 		
 		return farmersInHivProgramIndicator;
-		
 	}
 }

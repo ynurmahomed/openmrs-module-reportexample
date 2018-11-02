@@ -1,40 +1,31 @@
 package org.openmrs.module.reportexample.reporting.reports;
 
-import org.openmrs.module.reportexample.reporting.library.cohorts.GenderCohorts;
-import org.openmrs.module.reportexample.reporting.library.indicators.Indicators;
-import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
+import org.openmrs.module.reportexample.reporting.library.dimensions.GenderDimension;
+import org.openmrs.module.reportexample.reporting.library.indicators.FarmersInHivProgramIndicator;
 import org.openmrs.module.reporting.indicator.CohortIndicator;
 import org.openmrs.module.reporting.indicator.dimension.CohortDefinitionDimension;
 import org.openmrs.module.reporting.report.ReportDesign;
 import org.openmrs.module.reporting.report.definition.PeriodIndicatorReportDefinition;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.manager.BaseReportManager;
-import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.openmrs.module.reporting.evaluation.parameter.Mapped.noMappings;
-
-@Component
 public class MaleFarmersInHivProgramReport extends BaseReportManager {
 	
 	@Override
 	public ReportDefinition constructReportDefinition() {
-		
-		CohortDefinition maleCohort = GenderCohorts.maleCohort();
-		CohortDefinitionDimension genderDimension = new CohortDefinitionDimension();
-		genderDimension.addCohortDefinition("Male-Cohort", noMappings(maleCohort));
-		
-		CohortIndicator farmersInHivProgramIndicator = Indicators.farmersInHivProgramIndicator();
-		
+		CohortDefinitionDimension genderDimension = (CohortDefinitionDimension) GenderDimension.getDimension();
+		CohortIndicator farmersInHivProgramIndicator = (CohortIndicator) FarmersInHivProgramIndicator.getIndicator();
 		PeriodIndicatorReportDefinition report = new PeriodIndicatorReportDefinition();
-		
 		report.setupDataSetDefinition();
-		
 		report.setName("HIV Program Report 2");
 		report.addDimension("Gender-dimension", genderDimension);
-		report.addIndicator(farmersInHivProgramIndicator, "Gender-dimension=Male-Cohort");
-		
+		Map<String, String> dimension = new HashMap<String, String>();
+		dimension.put("Gender-dimension", "Male-Cohort");
+		report.addIndicator(farmersInHivProgramIndicator, dimension);
 		return report;
 	}
 	
