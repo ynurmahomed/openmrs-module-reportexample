@@ -9,12 +9,16 @@ import static org.openmrs.module.reporting.evaluation.parameter.Mapped.noMapping
 
 public class GenderDimension {
 	
+	public static final String MALE_COHORT = "Male-Cohort";
+	
+	public static final String FEMALE_COHORT = "Female-Cohort";
+	
 	public static Dimension getDimension() {
 		CohortDefinition maleCohort = GenderCohorts.maleCohort();
 		CohortDefinition femaleCohort = GenderCohorts.femaleCohort();
 		CohortDefinitionDimension dimension = new CohortDefinitionDimension();
-		dimension.addCohortDefinition("Male-Cohort", noMappings(maleCohort));
-		dimension.addCohortDefinition("Female-Cohort", noMappings(femaleCohort));
+		dimension.addCohortDefinition(MALE_COHORT, noMappings(maleCohort));
+		dimension.addCohortDefinition(FEMALE_COHORT, noMappings(femaleCohort));
 		return dimension;
 	}
 }
