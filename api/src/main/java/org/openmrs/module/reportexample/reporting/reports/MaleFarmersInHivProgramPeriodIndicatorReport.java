@@ -18,6 +18,10 @@ public class MaleFarmersInHivProgramPeriodIndicatorReport extends PeriodIndicato
 	
 	public static final String GENDER_DIMENSION = "Gender-Dimension";
 	
+	//    public MaleFarmersInHivProgramPeriodIndicatorReport() {
+	//        addDimension(GENDER_DIMENSION, GenderDimension.getDimension());
+	//    }
+	
 	@Override
 	public Map<String, Dimension> getDimensions() {
 		HashMap<String, Dimension> map = new HashMap<String, Dimension>();

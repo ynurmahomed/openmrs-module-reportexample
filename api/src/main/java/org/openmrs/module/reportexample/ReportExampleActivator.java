@@ -39,13 +39,13 @@ public class ReportExampleActivator extends BaseModuleActivator {
 	 * @see #stopped()
 	 */
 	public void stopped() {
-        for (PeriodIndicatorReport report : Context.getRegisteredComponents(PeriodIndicatorReport.class)) {
-            ReportDefinition rd = report.constructReportDefinition();
-            ReportDefinitionService rds = Context.getService(ReportDefinitionService.class);
-            if (rd != null) {
-                rds.purgeDefinition(rd);
-            }
-        }
+		for (PeriodIndicatorReport report : Context.getRegisteredComponents(PeriodIndicatorReport.class)) {
+			ReportDefinition rd = report.constructReportDefinition();
+			ReportDefinitionService rds = Context.getService(ReportDefinitionService.class);
+			if (rd != null) {
+				rds.purgeDefinition(rd);
+			}
+		}
 		log.info("Shutdown Report Example");
 	}
 	
