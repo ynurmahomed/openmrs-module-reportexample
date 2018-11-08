@@ -8,16 +8,10 @@ import org.openmrs.module.reporting.report.definition.PeriodIndicatorReportDefin
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.manager.BaseReportManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class PeriodIndicatorReport extends BaseReportManager {
-	
-	private Map<String, Dimension> dimensions = new HashMap<String, Dimension>();
-	
-	private List<IndicatorWithDimensionCategories> indicators = new ArrayList<IndicatorWithDimensionCategories>();
 	
 	public class IndicatorWithDimensionCategories {
 		
@@ -44,14 +38,6 @@ public abstract class PeriodIndicatorReport extends BaseReportManager {
 			report.addIndicator((CohortIndicator) indicator.indicator, indicator.dimensionCategories);
 		}
 		return report;
-	}
-	
-	public void addDimension(String key, Dimension dimension) {
-		this.dimensions.put(key, dimension);
-	}
-	
-	public void addIndicator(IndicatorWithDimensionCategories indicator) {
-		this.indicators.add(indicator);
 	}
 	
 	public abstract Map<String, Dimension> getDimensions();
