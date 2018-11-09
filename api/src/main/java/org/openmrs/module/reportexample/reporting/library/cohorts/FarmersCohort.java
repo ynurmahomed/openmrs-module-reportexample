@@ -9,9 +9,9 @@ import org.openmrs.module.reporting.common.SetComparator;
 
 public class FarmersCohort {
 	
-	private static final String OCCUPATION_CONCEPT_UUID = "824f3aaf-08f4-4164-94b0-2c4fe496c6a5";
+	private static final String OCCUPATION_CONCEPT_UUID = "7cdcdb2b-f698-43a1-8cb7-567d2a3f15b6";
 	
-	private static final String FARMER_CONCEPT_UUID = "529c645e-0497-42c2-9df1-afa467d4499f";
+	private static final String FARMER_CONCEPT_UUID = "1f632ae1-2579-460b-9e1a-81dd73ce268f";
 	
 	public static CohortDefinition getCohortDefinition() {
 		Concept occupationConcept = Context.getConceptService().getConceptByUuid(OCCUPATION_CONCEPT_UUID);
