@@ -1,17 +1,22 @@
 package org.openmrs.module.reportexample.reporting.reports;
 
+import org.apache.poi.util.IOUtils;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.reportexample.reporting.library.dimensions.GenderDimension;
 import org.openmrs.module.reportexample.reporting.library.indicators.FarmersInHivProgramIndicator;
 import org.openmrs.module.reporting.indicator.Indicator;
 import org.openmrs.module.reporting.indicator.dimension.Dimension;
 import org.openmrs.module.reporting.report.ReportDesign;
+import org.openmrs.module.reporting.report.ReportDesignResource;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
+import org.openmrs.module.reporting.report.renderer.ExcelTemplateRenderer;
+import org.openmrs.module.reporting.report.service.ReportService;
+import org.openmrs.util.OpenmrsClassLoader;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 @Component
 public class MaleFarmersInHivProgramPeriodIndicatorReport extends PeriodIndicatorReport {
@@ -52,7 +57,36 @@ public class MaleFarmersInHivProgramPeriodIndicatorReport extends PeriodIndicato
 	
 	@Override
 	public List<ReportDesign> constructReportDesigns(ReportDefinition reportDefinition) {
-		return null;
+		ReportService rs = Context.getService(ReportService.class);
+		String name = "design.xls";
+		String resourceName = "design.xls";
+		ReportDesign design = null;
+		
+		for (ReportDesign rdd : rs.getAllReportDesigns(false)) {
+			if (name.equals(rdd.getName())) {
+				rs.purgeReportDesign(rdd);
+			}
+		}
+		
+		ReportDesignResource resource = new ReportDesignResource();
+		resource.setName(resourceName);
+		resource.setExtension("xls");
+		InputStream is = OpenmrsClassLoader.getInstance().getResourceAsStream(resourceName);
+		
+		try {
+			resource.setContents(IOUtils.toByteArray(is));
+			design = new ReportDesign();
+			design.setName(name);
+			design.setReportDefinition(reportDefinition);
+			design.setRendererType(ExcelTemplateRenderer.class);
+			design.addResource(resource);
+			resource.setReportDesign(design);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return Arrays.asList(design);
 	}
 	
 	@Override
