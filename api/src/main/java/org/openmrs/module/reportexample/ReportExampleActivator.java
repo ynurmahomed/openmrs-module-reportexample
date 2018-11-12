@@ -13,9 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
-import org.openmrs.module.reportexample.reporting.reports.PeriodIndicatorReport;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.definition.service.ReportDefinitionService;
+import org.openmrs.module.reporting.report.manager.ReportManager;
 import org.openmrs.module.reporting.report.manager.ReportManagerUtil;
 
 /**
@@ -30,8 +30,8 @@ public class ReportExampleActivator extends BaseModuleActivator {
 	 */
 	public void started() {
 		log.info("Started Report Example updated");
-		for (PeriodIndicatorReport report : Context.getRegisteredComponents(PeriodIndicatorReport.class)) {
-			ReportManagerUtil.setupReport(report);
+		for (ReportManager registeredComponent : Context.getRegisteredComponents(ReportManager.class)) {
+			ReportManagerUtil.setupReport(registeredComponent);
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class ReportExampleActivator extends BaseModuleActivator {
 	 * @see #stopped()
 	 */
 	public void stopped() {
-		for (PeriodIndicatorReport report : Context.getRegisteredComponents(PeriodIndicatorReport.class)) {
+		for (ReportManager report : Context.getRegisteredComponents(ReportManager.class)) {
 			ReportDefinition rd = report.constructReportDefinition();
 			ReportDefinitionService rds = Context.getService(ReportDefinitionService.class);
 			if (rd != null) {
