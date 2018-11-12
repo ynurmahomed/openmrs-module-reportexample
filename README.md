@@ -1,9 +1,9 @@
-${moduleName}
+Example Report
 ==========================
 
 Description
 -----------
-This is a very basic module which can be used as a starting point in creating a new module.
+This is a very basic module implementing the indicator report from [OpenMRS Wiki](https://wiki.openmrs.org/pages/viewpage.action?pageId=19300405#BuildingReports(StepByStepGuide)-BuildingIndicatorReports).
 
 Building from Source
 --------------------
